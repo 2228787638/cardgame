@@ -57,6 +57,11 @@ public class Game {
         if(pairCountPlayer1.values().size()==4&&
                 pairCountPlayer2.values().size()==5){
             isPlayerWiner = true;
+        }else if(pairCountPlayer1.values().size()==4&&
+                pairCountPlayer2.values().size()==4){
+            if(changeCharToNumber(getKey(pairCountPlayer1,2))>changeCharToNumber(getKey(pairCountPlayer2,2))){
+                isPlayerWiner = true;
+            }
         }
         return isPlayerWiner;
     }
@@ -81,5 +86,15 @@ public class Game {
         }else{
             return "HighCard";
         }
+    }
+
+    public String getKey(Map<String,Integer> map,int value){
+        String key = null;
+        for(String getKey: map.keySet()){
+            if(map.get(getKey).equals(value)){
+                key = getKey;
+            }
+        }
+        return key;
     }
 }
