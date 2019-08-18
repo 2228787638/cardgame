@@ -11,7 +11,7 @@ public class Game {
             if(getCardNumber(player1[i]).equals(getCardNumber(player2[i]))){
                 continue;
             }else{
-                isPlayerWiner = Integer.parseInt(getCardNumber(player1[i]))>Integer.parseInt(getCardNumber(player2[i]));
+                isPlayerWiner = changeCharToNumber(getCardNumber(player1[i]))>changeCharToNumber(getCardNumber(player2[i]));
             }
         }
         return isPlayerWiner==true?"player1":"player2";
@@ -19,5 +19,15 @@ public class Game {
 
     public String getCardNumber(String str){
         return str.substring(0,1);
+    }
+    public int changeCharToNumber(String firstNumber){
+        switch(firstNumber){
+            case "T": return 10;
+            case "J": return 11;
+            case "Q": return 12;
+            case "K": return 13;
+            case "A": return 14;
+            default: return Integer.parseInt(firstNumber);
+        }
     }
 }

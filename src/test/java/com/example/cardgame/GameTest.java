@@ -13,7 +13,11 @@ public class GameTest {
         String player1[] = {"2H","3D","6S","7S","9C"};
         String player2[] = {"2H","3D","6S","7S","8C"};
         Assert.assertEquals("player1",new Game().getWinner(player1,player2));
-
     }
-
+    @Test
+    public void should_return_player2_given_the_player2_High_Card_higher_than_player2_High_Card_with_number_higher_than_T(){
+        String player1[] = {"2H","3D","5S","8C","9S"};
+        String player2[] = {"2H","3D","6S","7S","KH"};
+        Assert.assertEquals("player2",new Game().getWinner(player1,player2));
+    }
 }
