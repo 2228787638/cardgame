@@ -7,6 +7,7 @@ public class Game {
         Arrays.sort(player1);
         Arrays.sort(player2);
         switch (isCardType(player1,player2)){
+            case "Flush": return getFlushwinner(player1,player2)==true?"player1":"player2";
             case "Straight": return getStraightwinner(player1,player2)==true?"player1":"player2";
             case "ThreeOfAKind": return getThreeOfAKindrwinner(player1,player2)==true?"player1":"player2";
             case "Pair": return getPairwinner(player1,player2)==true?"player1":"player2";
@@ -17,6 +18,9 @@ public class Game {
 
     public String getCardNumber(String str){
         return str.substring(0,1);
+    }
+    public String getFlushColor(String str){
+        return str.substring(1,2);
     }
     public int changeCharToNumber(String firstNumber){
         switch(firstNumber){
@@ -125,6 +129,16 @@ public class Game {
         return isPlayerWiner;
     }
 
+    public boolean getFlushwinner(String[] player1, String[] player2){
+        boolean isPlayerWiner = false;
+        if(isFlush(player1)&&isFlush(player2)){
+            isPlayerWiner = changeCharToNumber(getCardNumber(player1[4]))>changeCharToNumber(getCardNumber(player2[4]));
+        }else{
+            isPlayerWiner = isFlush(player1);
+        }
+        return isPlayerWiner;
+    }
+
     public String isCardType(String[] player1,String[] player2){
         Map<String,Integer> pairCountPlayer1 = new HashMap();
         Map<String,Integer> pairCountPlayer2 = new HashMap();
@@ -140,7 +154,9 @@ public class Game {
                 pairCountPlayer2.put(getCardNumber(player2[i]), 1);
             }
         }
-        if((pairCountPlayer1.values().size()==5||pairCountPlayer2.values().size()==5)&&
+        if(isFlush(player1)||isFlush(player2)){
+            return "Flush";
+        }else if((pairCountPlayer1.values().size()==5||pairCountPlayer2.values().size()==5)&&
                 (isStraight(pairCountPlayer1)||isStraight(pairCountPlayer2))) {
             return "Straight";
         }else if(pairCountPlayer1.values().size()==3||pairCountPlayer2.values().size()==3) {
@@ -176,5 +192,18 @@ public class Game {
             before = changeCharToNumber(getKey);
         }
         return true;
+    }
+
+    public boolean isFlush(String[] player){
+        int flushColorCount[] = new int[200];
+        for(int i=0;i<player.length;i++){
+            flushColorCount[player[i].charAt(1)]++;
+            if(flushColorCount[player[i].charAt(1)]==5){
+                return true;
+            }
+        }
+
+        return false;
+
     }
 }
