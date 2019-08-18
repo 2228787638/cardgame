@@ -50,4 +50,10 @@ public class GameTest {
         String player2[] = {"2D","2S","9H","9C","TH"};
         Assert.assertEquals("player1",new Game().getWinner(player1,player2));
     }
+    @Test
+    public void should_return_player2_given_the_player2_Straight_higher_than_player1_Straight_Card(){
+        String player1[] = {"2H","3D","4S","5S","6C"};
+        String player2[] = {"3H","4D","5S","6C","7D"};
+        Assert.assertEquals("player2",new Game().getWinner(player1,player2));
+    }
 }

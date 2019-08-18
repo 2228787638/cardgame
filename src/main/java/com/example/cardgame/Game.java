@@ -7,6 +7,7 @@ public class Game {
         Arrays.sort(player1);
         Arrays.sort(player2);
         switch (isCardType(player1,player2)){
+            case "Straight": return getStraightwinner(player1,player2)==true?"player1":"player2";
             case "ThreeOfAKind": return getThreeOfAKindrwinner(player1,player2)==true?"player1":"player2";
             case "Pair": return getPairwinner(player1,player2)==true?"player1":"player2";
             case "HighCard": return getHighCardWinner(player1,player2)==true?"player1":"player2";
@@ -100,6 +101,27 @@ public class Game {
         }
         return isPlayerWiner;
     }
+    public boolean getStraightwinner(String[] player1, String[] player2){
+        boolean isPlayerWiner = false;
+        Map<String,Integer> pairCountPlayer1 = new HashMap();
+        Map<String,Integer> pairCountPlayer2 = new HashMap();
+        for(int i=0;i<5;i++){
+            if(pairCountPlayer1.containsKey(getCardNumber(player1[i]))) {
+                pairCountPlayer1.put(getCardNumber(player1[i]), pairCountPlayer1.get(getCardNumber(player1[i])) + 1);
+            }else{
+                pairCountPlayer1.put(getCardNumber(player1[i]), 1);
+            }
+            if(pairCountPlayer2.containsKey(getCardNumber(player2[i]))) {
+                pairCountPlayer2.put(getCardNumber(player2[i]), pairCountPlayer2.get(getCardNumber(player2[i])) + 1);
+            }else{
+                pairCountPlayer2.put(getCardNumber(player2[i]), 1);
+            }
+        }
+        if((pairCountPlayer1.values().size()==5&&pairCountPlayer2.values().size()==5)&&isStraight(pairCountPlayer1)&&isStraight(pairCountPlayer2)){
+            if(changeCharToNumber(getCardNumber(player1[4]))>changeCharToNumber(getCardNumber(player2[4]))) isPlayerWiner=true;
+        }
+        return isPlayerWiner;
+    }
 
     public String isCardType(String[] player1,String[] player2){
         Map<String,Integer> pairCountPlayer1 = new HashMap();
@@ -116,7 +138,10 @@ public class Game {
                 pairCountPlayer2.put(getCardNumber(player2[i]), 1);
             }
         }
-        if(pairCountPlayer1.values().size()==3||pairCountPlayer2.values().size()==3) {
+        if((pairCountPlayer1.values().size()==5||pairCountPlayer2.values().size()==5)&&
+                (isStraight(pairCountPlayer1)||isStraight(pairCountPlayer2))) {
+            return "Straight";
+        }else if(pairCountPlayer1.values().size()==3||pairCountPlayer2.values().size()==3) {
             if(pairCountPlayer1.values().contains(3))return "ThreeOfAKind";
             else return "Pair";
         }else if(pairCountPlayer1.values().size()==4||pairCountPlayer2.values().size()==4){
@@ -134,5 +159,20 @@ public class Game {
             }
         }
         return key;
+    }
+
+    public boolean isStraight(Map<String,Integer> pairCountPlayer){
+        int before = 0;
+        for(String getKey: pairCountPlayer.keySet()){
+            if(before==0){
+                before = changeCharToNumber(getKey);
+                continue;
+            }
+            if(before != changeCharToNumber(getKey)-1){
+                return false;
+            }
+            before = changeCharToNumber(getKey);
+        }
+        return true;
     }
 }
