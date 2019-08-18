@@ -7,6 +7,7 @@ public class Game {
         Arrays.sort(player1);
         Arrays.sort(player2);
         switch (isCardType(player1,player2)){
+            case "ThreeOfAKind": return getThreeOfAKindrwinner(player1,player2)==true?"player1":"player2";
             case "Pair": return getPairwinner(player1,player2)==true?"player1":"player2";
             case "HighCard": return getHighCardWinner(player1,player2)==true?"player1":"player2";
         }
@@ -65,6 +66,34 @@ public class Game {
         }
         return isPlayerWiner;
     }
+    public boolean getThreeOfAKindrwinner(String[] player1, String[] player2){
+        boolean isPlayerWiner = false;
+        Map<String,Integer> pairCountPlayer1 = new HashMap();
+        Map<String,Integer> pairCountPlayer2 = new HashMap();
+        for(int i=0;i<5;i++){
+            if(pairCountPlayer1.containsKey(getCardNumber(player1[i]))) {
+                pairCountPlayer1.put(getCardNumber(player1[i]), pairCountPlayer1.get(getCardNumber(player1[i])) + 1);
+            }else{
+                pairCountPlayer1.put(getCardNumber(player1[i]), 1);
+            }
+            if(pairCountPlayer2.containsKey(getCardNumber(player2[i]))) {
+                pairCountPlayer2.put(getCardNumber(player2[i]), pairCountPlayer2.get(getCardNumber(player2[i])) + 1);
+            }else{
+                pairCountPlayer2.put(getCardNumber(player2[i]), 1);
+            }
+        }
+
+        if(pairCountPlayer1.values().size()<pairCountPlayer2.values().size()){
+            isPlayerWiner = true;
+        }else if(pairCountPlayer1.values().size()==pairCountPlayer2.values().size()){
+            if(pairCountPlayer1.values().contains(3)&&pairCountPlayer2.values().contains(3))
+            {
+                isPlayerWiner = changeCharToNumber(getKey(pairCountPlayer1,3))
+                        >changeCharToNumber(getKey(pairCountPlayer2,3))?true:false;
+            }
+        }
+        return isPlayerWiner;
+    }
 
     public String isCardType(String[] player1,String[] player2){
         Map<String,Integer> pairCountPlayer1 = new HashMap();
@@ -81,7 +110,10 @@ public class Game {
                 pairCountPlayer2.put(getCardNumber(player2[i]), 1);
             }
         }
-        if(pairCountPlayer1.values().size()==4||pairCountPlayer2.values().size()==4){
+        if(pairCountPlayer1.values().size()==3||pairCountPlayer2.values().size()==3) {
+            if(pairCountPlayer1.values().contains(3))return "ThreeOfAKind";
+            else return "Pair";
+        }else if(pairCountPlayer1.values().size()==4||pairCountPlayer2.values().size()==4){
             return "Pair";
         }else{
             return "HighCard";
