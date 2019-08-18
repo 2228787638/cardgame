@@ -46,21 +46,8 @@ public class Game {
     }
     public boolean getPairwinner(String[] player1, String[] player2){
         boolean isPlayerWiner = false;
-        Map<String,Integer> pairCountPlayer1 = new HashMap();
-        Map<String,Integer> pairCountPlayer2 = new HashMap();
-        for(int i=0;i<5;i++){
-            if(pairCountPlayer1.containsKey(getCardNumber(player1[i]))) {
-                pairCountPlayer1.put(getCardNumber(player1[i]), pairCountPlayer1.get(getCardNumber(player1[i])) + 1);
-            }else{
-                pairCountPlayer1.put(getCardNumber(player1[i]), 1);
-            }
-            if(pairCountPlayer2.containsKey(getCardNumber(player2[i]))) {
-                pairCountPlayer2.put(getCardNumber(player2[i]), pairCountPlayer2.get(getCardNumber(player2[i])) + 1);
-            }else{
-                pairCountPlayer2.put(getCardNumber(player2[i]), 1);
-            }
-        }
-
+        Map<String,Integer> pairCountPlayer1 = getPlayerNumberCount(player1);
+        Map<String,Integer> pairCountPlayer2 = getPlayerNumberCount(player2);
         if(pairCountPlayer1.values().size()==4&&
                 pairCountPlayer2.values().size()==5){
             isPlayerWiner = true;
@@ -74,21 +61,8 @@ public class Game {
     }
     public boolean getThreeOfAKindrwinner(String[] player1, String[] player2){
         boolean isPlayerWiner = false;
-        Map<String,Integer> pairCountPlayer1 = new HashMap();
-        Map<String,Integer> pairCountPlayer2 = new HashMap();
-        for(int i=0;i<5;i++){
-            if(pairCountPlayer1.containsKey(getCardNumber(player1[i]))) {
-                pairCountPlayer1.put(getCardNumber(player1[i]), pairCountPlayer1.get(getCardNumber(player1[i])) + 1);
-            }else{
-                pairCountPlayer1.put(getCardNumber(player1[i]), 1);
-            }
-            if(pairCountPlayer2.containsKey(getCardNumber(player2[i]))) {
-                pairCountPlayer2.put(getCardNumber(player2[i]), pairCountPlayer2.get(getCardNumber(player2[i])) + 1);
-            }else{
-                pairCountPlayer2.put(getCardNumber(player2[i]), 1);
-            }
-        }
-
+        Map<String,Integer> pairCountPlayer1 = getPlayerNumberCount(player1);
+        Map<String,Integer> pairCountPlayer2 = getPlayerNumberCount(player2);
         if(pairCountPlayer1.values().size()<pairCountPlayer2.values().size()){
             isPlayerWiner = true;
         }else if(pairCountPlayer1.values().size()==pairCountPlayer2.values().size()){
@@ -108,20 +82,8 @@ public class Game {
     }
     public boolean getStraightwinner(String[] player1, String[] player2){
         boolean isPlayerWiner = false;
-        Map<String,Integer> pairCountPlayer1 = new HashMap();
-        Map<String,Integer> pairCountPlayer2 = new HashMap();
-        for(int i=0;i<5;i++){
-            if(pairCountPlayer1.containsKey(getCardNumber(player1[i]))) {
-                pairCountPlayer1.put(getCardNumber(player1[i]), pairCountPlayer1.get(getCardNumber(player1[i])) + 1);
-            }else{
-                pairCountPlayer1.put(getCardNumber(player1[i]), 1);
-            }
-            if(pairCountPlayer2.containsKey(getCardNumber(player2[i]))) {
-                pairCountPlayer2.put(getCardNumber(player2[i]), pairCountPlayer2.get(getCardNumber(player2[i])) + 1);
-            }else{
-                pairCountPlayer2.put(getCardNumber(player2[i]), 1);
-            }
-        }
+        Map<String,Integer> pairCountPlayer1 = getPlayerNumberCount(player1);
+        Map<String,Integer> pairCountPlayer2 = getPlayerNumberCount(player2);
         if((pairCountPlayer1.values().size()==5&&pairCountPlayer2.values().size()==5)&&isStraight(pairCountPlayer1)&&isStraight(pairCountPlayer2)){
             if(changeCharToNumber(getCardNumber(player1[4]))>changeCharToNumber(getCardNumber(player2[4]))) isPlayerWiner=true;
         }else{
@@ -141,39 +103,26 @@ public class Game {
     }
     public boolean getFullHouseWinner(String[] player1, String[] player2){
         boolean isPlayerWiner = false;
-        Map<String,Integer> pairCountPlayer1 = new HashMap();
-        Map<String,Integer> pairCountPlayer2 = new HashMap();
-        for(int i=0;i<5;i++){
-            if(pairCountPlayer1.containsKey(getCardNumber(player1[i]))) {
-                pairCountPlayer1.put(getCardNumber(player1[i]), pairCountPlayer1.get(getCardNumber(player1[i])) + 1);
-            }else{
-                pairCountPlayer1.put(getCardNumber(player1[i]), 1);
-            }
-            if(pairCountPlayer2.containsKey(getCardNumber(player2[i]))) {
-                pairCountPlayer2.put(getCardNumber(player2[i]), pairCountPlayer2.get(getCardNumber(player2[i])) + 1);
-            }else{
-                pairCountPlayer2.put(getCardNumber(player2[i]), 1);
-            }
-        }
+        Map<String,Integer> pairCountPlayer1 = getPlayerNumberCount(player1);
+        Map<String,Integer> pairCountPlayer2 = getPlayerNumberCount(player2);
         if(pairCountPlayer1.values().contains(3)&&pairCountPlayer1.values().contains(2)) isPlayerWiner=true;
 
         return isPlayerWiner;
     }
-    public String isCardType(String[] player1,String[] player2){
-        Map<String,Integer> pairCountPlayer1 = new HashMap();
-        Map<String,Integer> pairCountPlayer2 = new HashMap();
+    public Map<String,Integer> getPlayerNumberCount(String[] player){
+        Map<String,Integer> playerNumberCount = new HashMap();
         for(int i=0;i<5;i++){
-            if(pairCountPlayer1.containsKey(getCardNumber(player1[i]))) {
-                pairCountPlayer1.put(getCardNumber(player1[i]), pairCountPlayer1.get(getCardNumber(player1[i])) + 1);
+            if(playerNumberCount.containsKey(getCardNumber(player[i]))) {
+                playerNumberCount.put(getCardNumber(player[i]), playerNumberCount.get(getCardNumber(player[i])) + 1);
             }else{
-                pairCountPlayer1.put(getCardNumber(player1[i]), 1);
-            }
-            if(pairCountPlayer2.containsKey(getCardNumber(player2[i]))) {
-                pairCountPlayer2.put(getCardNumber(player2[i]), pairCountPlayer2.get(getCardNumber(player2[i])) + 1);
-            }else{
-                pairCountPlayer2.put(getCardNumber(player2[i]), 1);
+                playerNumberCount.put(getCardNumber(player[i]), 1);
             }
         }
+        return playerNumberCount;
+    }
+    public String isCardType(String[] player1,String[] player2){
+        Map<String,Integer> pairCountPlayer1 = getPlayerNumberCount(player1);
+        Map<String,Integer> pairCountPlayer2 = getPlayerNumberCount(player2);
         if((pairCountPlayer1.values().contains(3)&&pairCountPlayer1.values().contains(2))||
                 (pairCountPlayer2.values().contains(3)&&pairCountPlayer2.values().contains(2))){
             return "FullHouse";
