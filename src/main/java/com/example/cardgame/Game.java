@@ -90,6 +90,12 @@ public class Game {
             {
                 isPlayerWiner = changeCharToNumber(getKey(pairCountPlayer1,3))
                         >changeCharToNumber(getKey(pairCountPlayer2,3))?true:false;
+            }else if(pairCountPlayer1.values().contains(3)&&pairCountPlayer2.values().contains(2)
+            &&!pairCountPlayer2.values().contains(3)){
+                isPlayerWiner=true;
+            }else if(pairCountPlayer2.values().contains(3)&&pairCountPlayer1.values().contains(2)
+                    &&!pairCountPlayer1.values().contains(3)){
+                isPlayerWiner=false;
             }
         }
         return isPlayerWiner;

@@ -44,5 +44,10 @@ public class GameTest {
         String player2[] = {"2D","2S","2H","5C","9H"};
         Assert.assertEquals("player1",new Game().getWinner(player1,player2));
     }
-
+    @Test
+    public void should_return_player1_given_the_player1_Three_Of_A_Kind_higher_than_player2_Two_pairs_Card(){
+        String player1[] = {"8H","8D","8S","5S","7C"};
+        String player2[] = {"2D","2S","9H","9C","TH"};
+        Assert.assertEquals("player1",new Game().getWinner(player1,player2));
+    }
 }
