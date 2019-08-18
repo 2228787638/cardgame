@@ -115,7 +115,7 @@ public class Game {
         Map<String,Integer> pairCountPlayer1 = getPlayerNumberCount(player1);
         Map<String,Integer> pairCountPlayer2 = getPlayerNumberCount(player2);
         if(pairCountPlayer1.values().contains(4)&&pairCountPlayer2.values().contains(4)){
-            isPlayerWiner = changeCharToNumber(getKey(pairCountPlayer1,4))
+            return changeCharToNumber(getKey(pairCountPlayer1,4))
                     > changeCharToNumber(getKey(pairCountPlayer2,4));
         }
         if(pairCountPlayer1.values().contains(4)) isPlayerWiner=true;
