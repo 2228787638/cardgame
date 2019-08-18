@@ -32,4 +32,10 @@ public class GameTest {
         String player2[] = {"2D","3S","5H","5C","8H"};
         Assert.assertEquals("player1",new Game().getWinner(player1,player2));
     }
+    @Test
+    public void should_return_player2_given_the_player2_two_pair_card_than_player1_pair_Card(){
+        String player1[] = {"2H","3D","4S","7S","7C"};
+        String player2[] = {"2D","2S","5H","5C","8H"};
+        Assert.assertEquals("player2",new Game().getWinner(player1,player2));
+    }
 }
