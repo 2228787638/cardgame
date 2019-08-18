@@ -7,6 +7,7 @@ public class Game {
         Arrays.sort(player1);
         Arrays.sort(player2);
         switch (isCardType(player1,player2)){
+            case "StraightFlush": return getStraightFlushWinner(player1,player2)==true?"player1":"player2";
             case "FourOfAKind": return getFourOfAKindWinner(player1,player2)==true?"player1":"player2";
             case "FullHouse": return getFullHouseWinner(player1,player2)==true?"player1":"player2";
             case "Flush": return getFlushwinner(player1,player2)==true?"player1":"player2";
@@ -121,6 +122,17 @@ public class Game {
         if(pairCountPlayer1.values().contains(4)) isPlayerWiner=true;
         return isPlayerWiner;
     }
+    public boolean getStraightFlushWinner(String[] player1, String[] player2){
+        boolean isPlayerWiner = false;
+        Map<String,Integer> pairCountPlayer1 = getPlayerNumberCount(player1);
+        Map<String,Integer> pairCountPlayer2 = getPlayerNumberCount(player2);
+        if(pairCountPlayer1.values().size()==5&&isFlush(player1)&&isStraight(pairCountPlayer1)&&
+                pairCountPlayer2.values().size()==5&&isFlush(player2)&&isStraight(pairCountPlayer2)){
+            return changeCharToNumber(getCardNumber(player1[4]))>changeCharToNumber(getCardNumber(player2[4]));
+        }
+        if(pairCountPlayer1.values().size()==5&&isFlush(player1)&&isStraight(pairCountPlayer1)) isPlayerWiner=true;
+        return isPlayerWiner;
+    }
     public Map<String,Integer> getPlayerNumberCount(String[] player){
         Map<String,Integer> playerNumberCount = new HashMap();
         for(int i=0;i<5;i++){
@@ -135,7 +147,10 @@ public class Game {
     public String isCardType(String[] player1,String[] player2){
         Map<String,Integer> pairCountPlayer1 = getPlayerNumberCount(player1);
         Map<String,Integer> pairCountPlayer2 = getPlayerNumberCount(player2);
-        if(pairCountPlayer1.values().contains(4)||pairCountPlayer2.values().contains(4)){
+        if(pairCountPlayer1.values().size()==5&&isFlush(player1)&&isStraight(pairCountPlayer1)||
+                pairCountPlayer2.values().size()==5&&isFlush(player2)&&isStraight(pairCountPlayer2)){
+            return "StraightFlush";
+        }else if(pairCountPlayer1.values().contains(4)||pairCountPlayer2.values().contains(4)){
             return "FourOfAKind";
         }else if((pairCountPlayer1.values().contains(3)&&pairCountPlayer1.values().contains(2))||
                 (pairCountPlayer2.values().contains(3)&&pairCountPlayer2.values().contains(2))){
