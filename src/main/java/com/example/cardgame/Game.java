@@ -119,6 +119,8 @@ public class Game {
         }
         if((pairCountPlayer1.values().size()==5&&pairCountPlayer2.values().size()==5)&&isStraight(pairCountPlayer1)&&isStraight(pairCountPlayer2)){
             if(changeCharToNumber(getCardNumber(player1[4]))>changeCharToNumber(getCardNumber(player2[4]))) isPlayerWiner=true;
+        }else{
+            return pairCountPlayer1.values().size()>pairCountPlayer2.values().size();
         }
         return isPlayerWiner;
     }
