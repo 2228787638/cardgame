@@ -15,9 +15,15 @@ public class GameTest {
         Assert.assertEquals("player1",new Game().getWinner(player1,player2));
     }
     @Test
-    public void should_return_player2_given_the_player2_High_Card_higher_than_player2_High_Card_with_number_higher_than_T(){
+    public void should_return_player2_given_the_player2_High_Card_higher_than_player1_High_Card_with_number_higher_than_T(){
         String player1[] = {"2H","3D","5S","8C","9S"};
         String player2[] = {"2H","3D","6S","7S","KH"};
         Assert.assertEquals("player2",new Game().getWinner(player1,player2));
+    }
+    @Test
+    public void should_return_player1_given_the_player1_pair_card_than_player2_High_Card(){
+        String player1[] = {"2H","3D","3S","5S","7C"};
+        String player2[] = {"2D","4S","5H","7C","8H"};
+        Assert.assertEquals("player1",new Game().getWinner(player1,player2));
     }
 }
