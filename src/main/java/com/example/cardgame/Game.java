@@ -7,6 +7,7 @@ public class Game {
         Arrays.sort(player1);
         Arrays.sort(player2);
         switch (isCardType(player1,player2)){
+            case "FullHouse": return getFullHouseWinner(player1,player2)==true?"player1":"player2";
             case "Flush": return getFlushwinner(player1,player2)==true?"player1":"player2";
             case "Straight": return getStraightwinner(player1,player2)==true?"player1":"player2";
             case "ThreeOfAKind": return getThreeOfAKindrwinner(player1,player2)==true?"player1":"player2";
@@ -138,7 +139,26 @@ public class Game {
         }
         return isPlayerWiner;
     }
+    public boolean getFullHouseWinner(String[] player1, String[] player2){
+        boolean isPlayerWiner = false;
+        Map<String,Integer> pairCountPlayer1 = new HashMap();
+        Map<String,Integer> pairCountPlayer2 = new HashMap();
+        for(int i=0;i<5;i++){
+            if(pairCountPlayer1.containsKey(getCardNumber(player1[i]))) {
+                pairCountPlayer1.put(getCardNumber(player1[i]), pairCountPlayer1.get(getCardNumber(player1[i])) + 1);
+            }else{
+                pairCountPlayer1.put(getCardNumber(player1[i]), 1);
+            }
+            if(pairCountPlayer2.containsKey(getCardNumber(player2[i]))) {
+                pairCountPlayer2.put(getCardNumber(player2[i]), pairCountPlayer2.get(getCardNumber(player2[i])) + 1);
+            }else{
+                pairCountPlayer2.put(getCardNumber(player2[i]), 1);
+            }
+        }
+        if(pairCountPlayer1.values().contains(3)&&pairCountPlayer1.values().contains(2)) isPlayerWiner=true;
 
+        return isPlayerWiner;
+    }
     public String isCardType(String[] player1,String[] player2){
         Map<String,Integer> pairCountPlayer1 = new HashMap();
         Map<String,Integer> pairCountPlayer2 = new HashMap();
@@ -154,7 +174,10 @@ public class Game {
                 pairCountPlayer2.put(getCardNumber(player2[i]), 1);
             }
         }
-        if(isFlush(player1)||isFlush(player2)){
+        if((pairCountPlayer1.values().contains(3)&&pairCountPlayer1.values().contains(2))||
+                (pairCountPlayer2.values().contains(3)&&pairCountPlayer2.values().contains(2))){
+            return "FullHouse";
+        }else if(isFlush(player1)||isFlush(player2)){
             return "Flush";
         }else if((pairCountPlayer1.values().size()==5||pairCountPlayer2.values().size()==5)&&
                 (isStraight(pairCountPlayer1)||isStraight(pairCountPlayer2))) {
@@ -202,8 +225,6 @@ public class Game {
                 return true;
             }
         }
-
         return false;
-
     }
 }
